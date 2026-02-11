@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Interface</title>
+  <link rel="icon" type="image/jpeg" href="images/icon.jpg">
+  <meta name="interface" content="description">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+
+    <table class="header-table">
+        <tr>
+            <td>
+                <img id="logo" src="images/1er.png" alt="CY Université">
+            </td>
+            <td class="header-certer" >
+                <h1>Interface</h1>
+            </td>
+            <td class="qtf">
+                <p class="header-meta">
+                    <strong>L2 Informatique CY Université</strong><br>
+                    Année 2025–2026
+                </p>
+                <img id="scndlogo" src="images/france.jpg" alt="France">
+            </td>
+        </tr>
+    </table>
+    <nav class="main-nav">
+        <a href="index.html" class="active">Accueil</a>
+        <a href="intrus.html" class="active">Intrus</a>
+        <a href="gardiens.html" class="active">Gardiens</a>
+        <a href="interface.html" class="active">Interface</a>
+        <a href="deplacements.html" class="active">Déplacements</a>
+        <a href="map.html" class="active">Map</a>
+        <a href="aide.html" class="active">Aide</a>
+    </nav>
+</header>
+<br>
+<main class="container">
+<section>
+    <h2>Objectif de l’interface (IHM)</h2>
+    <p>
+        Cette page décrit comment notre application sera <strong>présentée visuellement</strong>.
+        Notre projet est une simulation : l’utilisateur ne joue pas “avec un personnage” comme dans un jeu classique,
+        mais il observe un système qui évolue dans le temps. L’interface doit donc être claire, lisible et organisée.
+    </p>
+    <p>
+        L’interface répond à deux fonctions principales (comme vu avec le professeur) :
+        <strong>la saisie</strong> (contrôler la simulation) et <strong>l’affichage</strong> (voir ce qui se passe).
+        Le but est que l’utilisateur comprenne immédiatement : où sont les intrus, où sont les gardiens, où sont les pièces,
+        quels éléments bloquent le déplacement, et comment la partie évolue (score, temps, fin de partie).
+    </p>
+    <p>
+        Pour notre premier avancement, on a déjà l’affichage de la grille et des sprites.
+        Les éléments de contrôle (start/stop/clear), le score et le timer viendront ensuite dans les prochaines mises à jour.
+        L’objectif est de construire une interface progressivement, sans ajouter de complexité inutile d’un coup.
+    </p>
+</section>
+<hr>
+<section>
+    <h2>Organisation générale de l’écran</h2>
+    <p>
+        Visuellement, l’application sera organisée de manière simple et logique, pour éviter d’encombrer l’écran.
+        On peut voir l’interface comme un assemblage de zones, chacune ayant un rôle précis.
+        L’idée est de séparer l’espace de simulation (la grille) des informations (score/temps) et des commandes (boutons).
+    </p>
+    <ul>
+        <li>
+            <strong>En haut (header / bandeau)</strong> : un titre, éventuellement le nom du projet, et les boutons de contrôle
+            <em>(Start / Stop / Clear)</em>. Cette zone sert à “piloter” la simulation.
+        </li>
+        <li>
+            <strong>Au centre (zone principale)</strong> : la grille, c’est-à-dire la Map affichée sous forme de cases.
+            C’est la partie la plus importante, car c’est là que l’utilisateur voit les déplacements et les interactions.
+        </li>
+        <li>
+            <strong>À droite (panneau d’informations)</strong> : des informations en temps réel, comme le score, le nombre de pièces restantes,
+            le nombre d’intrus restants, et un chronomètre (timer). Ce panneau permet de suivre la progression de la simulation.
+        </li>
+        <li>
+            <strong>En bas (footer)</strong> : une zone plus “informatique” / “statut”, qui peut afficher un message simple :
+            état de la simulation (en cours / pause), ou une indication de fin de partie, ou une phrase de rappel.
+        </li>
+    </ul>
+    <p>
+        Même si la disposition exacte peut légèrement évoluer, l’idée générale restera la même :
+        <strong>commandes en haut</strong>, <strong>simulation au centre</strong>, <strong>infos à droite</strong>.
+        Cela correspond à une interface classique, simple à comprendre et agréable à présenter.
+    </p>
+</section>
+<hr>
+<section>
+    <h2>Affichage de la grille (Map) : lisibilité et compréhension</h2>
+    <p>
+        La grille représente le “monde” de la simulation. Chaque case est une unité de déplacement (un Block).
+        Les entités se déplacent case par case, ce qui rend la simulation facile à suivre visuellement.
+        Le quadrillage donne une structure claire et évite que les entités “flottent” dans l’espace.
+    </p>
+    <p>
+        La grille sera affichée avec des traits visibles entre les cases, mais sans être trop agressive visuellement.
+        L’objectif est de garder un fond lisible : on voit la carte, mais on se concentre surtout sur les entités
+        (intrus, gardiens, pièces, obstacles). La grille sert de repère : elle montre où se trouvent les éléments.
+    </p>
+    <p>
+        Dans l’avancement actuel, le déplacement des intrus et des gardiens est déjà visible :
+        à chaque itération, la simulation met à jour les positions, puis l’écran est redessiné.
+        Cela crée une animation simple, suffisante pour comprendre le principe.
+    </p>
+    <figure>
+        <img class="fmt-img-last" src="images/image-grille.png" alt="map">
+    </figure>
+    <p class="centrage"><em><strong>Représentation de la map remplit.</strong></em></p>
+</section>
+<hr>
+<section>
+    <h2>Décor et sprites : ce que l’utilisateur voit réellement</h2>
+    <p>
+        Une partie importante de notre projet est l’utilisation de <strong>sprites</strong>, c’est-à-dire des images utilisées
+        pour représenter les entités. Dans la simulation, un intrus n’est pas juste un point abstrait :
+        il a une image qui permet de le reconnaître. Même chose pour un gardien, une pièce, et un obstacle.
+    </p>
+    <p>
+        Le “décor” dans notre projet correspond à l’idée suivante : associer une entité à une apparence.
+        Concrètement, cela veut dire que chaque type d’élément possède une image :
+    </p>
+    <ul>
+        <li><strong>Intrus</strong> : sprite intrus (ex : <code>intrus.png</code>)</li>
+        <li><strong>Gardien</strong> : sprite gardien (ex : <code>guardian.png</code>)</li>
+        <li><strong>Pièce</strong> : sprite pièce (ex : <code>piece.png</code>)</li>
+        <li><strong>Obstacle</strong> : sprite obstacle (ex : <code>obstacle.png</code>)</li>
+    </ul>
+    <p>
+        Le but des sprites est de rendre l’interface plus compréhensible : l’utilisateur voit immédiatement quel élément est lequel.
+        Cela évite la confusion, surtout quand la simulation contient beaucoup d’intrus et de gardiens à l’écran.
+        Le décor permet aussi d’améliorer la présentation lors d’une démonstration devant le professeur.
+    </p>
+    <p>
+        À terme, on pourra aussi ajouter un <strong>fond</strong> (background) ou une texture légère pour rendre la grille plus agréable,
+        mais sans casser la lisibilité. Le plus important reste la clarté et la compréhension du système.
+    </p>
+</section>
+<hr>
+<section>
+    <h2>Couleurs : choix visuel et rôle pédagogique</h2>
+    <p>
+        Les couleurs ne servent pas seulement à “faire joli” : elles servent à rendre la simulation plus facile à lire.
+        Dans une interface de simulation, une bonne couleur peut remplacer une longue explication.
+        Par exemple, une zone de vision en rouge transparent signifie immédiatement “attention, danger”.
+    </p>
+    <p>
+        Notre choix visuel général est de garder une interface sombre (fond sombre) avec des éléments contrastés,
+        car cela met en valeur les sprites et évite d’avoir une grille trop agressive. Les traits de la grille peuvent être gris clair,
+        et les zones spéciales (vision) peuvent utiliser une couleur transparente.
+    </p>
+    <p>
+        La couleur peut aussi aider à comprendre les états, par exemple :
+    </p>
+    <ul>
+        <li><strong>Vision des gardiens</strong> : rouge transparent (indique la zone de surveillance).</li>
+        <li><strong>État “alerte”</strong> : on peut imaginer un changement léger de couleur du gardien (option futur), ou une indication texte.</li>
+        <li><strong>Obstacles</strong> : visuellement “solides” et repérables (sprite obstacle + éventuellement couleur plus sombre).</li>
+        <li><strong>Pièces</strong> : visibles et attractives (sprite clair ou distinct).</li>
+    </ul>
+    <p>
+        L’idée n’est pas d’avoir trop de couleurs différentes, mais de garder un code couleur cohérent :
+        peu de couleurs, mais chacune a un sens clair.
+    </p>
+</section>
+<hr>
+<section>
+    <h2>Header : commandes et contrôle de la simulation</h2>
+    <p>
+        Le header (bandeau du haut) est la zone où l’utilisateur contrôle la simulation. Dans les prochaines versions,
+        on intégrera les boutons <strong>Start</strong>, <strong>Stop</strong> et <strong>Clear</strong>.
+        Ces boutons sont essentiels car notre application est une simulation : l’utilisateur doit pouvoir démarrer,
+        mettre en pause, et recommencer facilement.
+    </p>
+    <p>
+        Le header peut aussi contenir un titre et éventuellement une courte indication, par exemple “Simulation en cours”
+        ou “Simulation en pause”. Cela aide à comprendre immédiatement l’état du programme.
+    </p>
+    <p>
+        L’objectif est que cette zone soit très simple : l’utilisateur doit trouver les boutons rapidement,
+        et comprendre ce qu’ils font sans réfléchir.
+    </p>
+</section>
+<hr>
+<section>
+    <h2>Panneau d’informations à droite : score, timer et état</h2>
+    <p>
+        Le panneau de droite est prévu pour afficher les informations importantes sans encombrer la grille.
+        Dans une simulation, la grille doit rester lisible ; les chiffres et textes doivent donc être placés ailleurs.
+        C’est pour cela que nous prévoyons un panneau séparé.
+    </p>
+    <p>
+        Les informations prévues sont :
+    </p>
+    <ul>
+        <li><strong>Score</strong> : nombre de pièces récupérées par les intrus.</li>
+        <li><strong>Timer</strong> : temps écoulé depuis le début de la simulation (chronomètre).</li>
+        <li><strong>Pièces restantes</strong> : utile pour suivre l’avancement de l’objectif.</li>
+        <li><strong>Intrus restants</strong> : utile pour comprendre si la fin de partie approche.</li>
+        <li><strong>État du jeu</strong> : “en cours / pause / fin”.</li>
+    </ul>
+    <p>
+        Ce panneau rend la simulation plus “présentable” : on peut suivre une partie en regardant le score et le temps,
+        sans avoir besoin d’interpréter uniquement le mouvement sur la grille.
+    </p>
+</section>
+<hr>
+<section>
+    <h2>Footer : messages, statut et lisibilité</h2>
+    <p>
+        Le footer (bandeau du bas) peut sembler secondaire, mais il peut être très utile pour afficher
+        des informations simples. Par exemple, on peut y afficher :
+    </p>
+    <ul>
+        <li>un message “Simulation démarrée” / “Simulation arrêtée”</li>
+        <li>un message “Fin de partie : tous les intrus ont été capturés”</li>
+        <li>une indication sur la dernière action importante</li>
+        <li>une courte phrase descriptive pour la démonstration</li>
+    </ul>
+    <p>
+        L’objectif n’est pas d’en faire une zone chargée, mais une zone claire qui peut aider pendant une démonstration,
+        surtout quand on veut expliquer rapidement ce que l’on observe.
+    </p>
+</section>
+<hr>
+<section>
+    <h2>Évolutions futures : vision, poursuite, vitesse et compréhension visuelle</h2>
+    <p>
+        Une fois l’interface de base bien en place, nous allons enrichir l’expérience visuelle en ajoutant
+        des éléments qui expliquent le comportement des entités.
+        L’exemple principal est la <strong>vision</strong> : afficher la zone de surveillance d’un gardien
+        permet de comprendre pourquoi un intrus est repéré, pourquoi un gardien change de direction, etc.
+    </p>
+    <p>
+        Dans les futures versions, quand un gardien détecte un intrus dans sa vision, il passera en mode alerte :
+        il se mettra à poursuivre l’intrus, et sa vitesse augmentera (course fictive).
+        Ce changement de comportement doit être visible : l’utilisateur doit comprendre que “le gardien a vu quelque chose”.
+        L’interface aura donc un rôle pédagogique : montrer les causes et les conséquences.
+    </p>
+</section>
+<hr>
+<section>
+    <h2>Comportements futurs prévus pour les gardiens</h2>
+
+    <p>
+        Dans les premières versions de la simulation, les gardiens se déplacent de manière aléatoire afin
+        de tester l’animation et le fonctionnement général du moteur. Cependant, ce comportement n’est
+        qu’une étape de base. L’objectif final est de rendre les gardiens plus réactifs et plus cohérents
+        grâce à des règles simples de détection et de poursuite.
+    </p>
+
+    <h3>Évolutions prévues pour les gardiens</h3>
+    <ul>
+        <li>
+            <strong>Ajout d’une zone de vision :</strong>
+            chaque gardien possédera une zone de vision devant lui,
+            représentée visuellement sur la grille.
+        </li>
+
+        <li>
+            <strong>Mode recherche :</strong>
+            lorsque le gardien ne voit aucun intrus, il patrouille
+            normalement sur la carte avec un déplacement simple.
+        </li>
+
+        <li>
+            <strong>Détection d’un intrus :</strong>
+            si un intrus entre dans la zone de vision du gardien,
+            celui-ci change automatiquement d’état.
+        </li>
+
+        <li>
+            <strong>Passage en mode alerte :</strong>
+            le gardien abandonne le déplacement aléatoire et
+            se concentre sur l’intrus détecté.
+        </li>
+
+        <li>
+            <strong>Poursuite de l’intrus :</strong>
+            le gardien choisit une direction qui le rapproche
+            de la position de l’intrus afin de le rattraper.
+        </li>
+
+        <li>
+            <strong>Augmentation de la vitesse :</strong>
+            en mode alerte, le gardien accélère pour simuler
+            une course fictive et rendre la poursuite plus dynamique.
+        </li>
+
+        <li>
+            <strong>Capture de l’intrus :</strong>
+            si le gardien atteint la même case qu’un intrus,
+            celui-ci est capturé et disparaît de la simulation.
+        </li>
+
+        <li>
+            <strong>Fin de partie possible :</strong>
+            si tous les intrus sont capturés,
+            la simulation peut s’arrêter automatiquement.
+        </li>
+    </ul>
+
+    <p>
+        Ces comportements permettront de transformer les gardiens en agents plus intelligents et plus dynamiques.
+        Ils ne se contenteront plus de se déplacer au hasard, mais réagiront à ce qu’ils voient, ce qui rendra
+        la simulation plus cohérente et plus intéressante.
+    </p>
+</section>
+</main>
+<footer class="site-footer">
+
+  <table class="footer-top">
+    <tr>
+      <td>
+        <a class="footer-top-link" href="#top">Retour en haut</a>
+      </td>
+    </tr>
+  </table>
+  <table class="footer-alc">
+    <tr>
+      <td class="footer-col">
+        <strong>Autre redirections</strong>
+        <ul class="footer-links">
+            <li><a href="index.html">->Accueil</a></li>
+            <li><a href="intrus.html">->Intrus</a></li>
+            <li><a href="gardiens.html">->Gardiens</a></li>
+            <li><a href="interface.html">->Interface</a></li>
+            <li><a href="deplacements.html">->Deplacements</a></li>
+            <li><a href="map.html">->Map</a></li>
+            <li><a href="aide.html">->Aide</a></li>
+        </ul>
+      </td>
+      <td class="footer-col">
+        <p class="footer-text">
+          <strong>Auteurs :</strong> Rayan Moulai & Anis Zine Abidine & Rayan Lanouni <br>
+          <em>Licence Informatique L2 CYU<br>Année 2025–2026<br>Analyser les métadonnées d’un fichier MP3</em>
+        </p>
+      </td>
+      <td class="footer-col">
+        <img id="logobas" src="images/2eme.png" alt="logblanc"><br>
+        <span> 
+            CY Cergy Paris Université<br>
+            33 Boulevard du Port<br>
+            95011 Cergy-Pontoise<br>
+            01 34 25 60 00
+        </span>
+      </td>
+    </tr>
+</table>
+</footer>
+<a href="aide.html" class="aide" target="_blank">Besoin d'aide ?</a>
+</body>
+</html>
+

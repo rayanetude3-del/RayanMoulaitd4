@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Gardien</title>
+  <link rel="icon" type="image/jpeg" href="images/icon.jpg">
+  <meta name="gardien" content="description">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+
+    <table class="header-table">
+        <tr>
+            <td>
+                <img id="logo" src="images/1er.png" alt="CY Université">
+            </td>
+            <td class="header-certer" >
+                <h1>Gardien</h1>
+            </td>
+            <td class="qtf">
+                <p class="header-meta">
+                    <strong>L2 Informatique CY Université</strong><br>
+                    Année 2025–2026
+                </p>
+                <img id="scndlogo" src="images/france.jpg" alt="France">
+            </td>
+        </tr>
+    </table>
+    <nav class="main-nav">
+        <a href="index.html" class="active">Accueil</a>
+        <a href="intrus.html" class="active">Intrus</a>
+        <a href="gardiens.html" class="active">Gardiens</a>
+        <a href="interface.html" class="active">Interface</a>
+        <a href="deplacements.html" class="active">Déplacements</a>
+        <a href="map.html" class="active">Map</a>
+        <a href="aide.html" class="active">Aide</a>
+    </nav>
+</header>
+<br>
+<main class="container">
+<section>
+    <h2>Présentation générale des gardiens</h2>
+    <p>
+        Les <strong>gardiens</strong> sont les agents opposés aux intrus. Leur rôle est de contrôler l’espace et de limiter
+        la réussite des intrus. Si les intrus représentent la partie “collecte”, les gardiens représentent la partie “surveillance”.
+        Le gardien n’a pas pour objectif de marquer des points, mais de réduire l’impact des intrus sur la partie.
+    </p>
+    <p>
+        Dans la simulation, un gardien est un agent mobile qui possède une position sur la grille, comme les intrus.
+        Sa présence crée une contrainte : l’intrus ne peut plus se déplacer librement s’il risque d’être capturé.
+        C’est ce qui rend le jeu plus intéressant : l’intrus doit prendre des risques, et le gardien doit être efficace.
+    </p>
+    <p>
+        Dans notre premier avancement, le gardien se déplace également de façon aléatoire. Cela permet de tester le fonctionnement
+        général, de voir l’animation, et de valider que le système supporte plusieurs entités en mouvement.
+    </p>
+    <figure>
+        <img class="fmt-img" src="images/guardian.png" alt="guardian">
+    </figure>
+    <p class="centrage"><em><strong>Représentation d'un Gardien.</strong></em></p>
+</section>
+
+<section>
+    <h2>Objectif principal : attraper les intrus</h2>
+    <p>
+        Le but final d’un gardien est de <strong>capturer les intrus</strong>. Concrètement, on peut définir une règle simple :
+        si un gardien arrive sur la même case qu’un intrus, alors l’intrus est capturé et disparaît (ou devient inactif).
+        Cette capture peut aussi déclencher un changement d’état dans la simulation, voire la fin de partie si tous les intrus sont capturés.
+    </p>
+    <p>
+        Cette mécanique permet de créer une tension simple : les intrus essayent d’augmenter le score en récupérant des pièces,
+        tandis que les gardiens cherchent à les empêcher d’y arriver. La simulation devient alors un “jeu” avec deux objectifs opposés.
+    </p>
+</section>
+
+<section>
+    <h2>Vision : une notion essentielle pour la suite</h2>
+    <p>
+        Une fonctionnalité importante prévue dans la suite est la <strong>vision</strong> des gardiens.
+        La vision correspond à une zone dans laquelle le gardien peut détecter un intrus. Par exemple, une vision peut être représentée
+        par plusieurs cases devant le gardien, dans une direction donnée.
+    </p>
+    <p>
+        L’affichage de la vision est utile car il permet de comprendre visuellement le comportement d’un gardien :
+        on voit “où il regarde” et on comprend pourquoi il change de comportement. Dans notre projet, nous avons déjà la base pour afficher
+        une zone de vision (par exemple en rouge transparent), mais le comportement de poursuite sera ajouté ensuite.
+    </p>
+    <p>
+        Grâce à cette vision, un gardien pourra passer d’un comportement aléatoire à un comportement de poursuite :
+        dès qu’un intrus est repéré, le gardien se dirige vers lui.
+    </p>
+</section>
+
+<section>
+    <h2>Vitesse et poursuite (fonctionnalités prévues)</h2>
+    <p>
+        Une fois la vision en place, l’évolution logique est d’ajouter un système de <strong>poursuite</strong>.
+        La poursuite consiste à choisir un déplacement qui rapproche le gardien de l’intrus repéré, au lieu d’avancer au hasard.
+        Cela rend la simulation plus cohérente et plus “intelligente”.
+    </p>
+    <p>
+        Nous prévoyons aussi une variation de <strong>vitesse</strong> :
+        un gardien peut se déplacer normalement tant qu’il ne voit rien, puis accélérer lorsqu’il repère un intrus.
+        Cette accélération rend le gardien plus dangereux et oblige l’intrus à réagir.
+    </p>
+    <p>
+        Cette vitesse pourra être gérée de manière simple, sans entrer dans une IA complexe : soit en réduisant le temps entre deux tours,
+        soit en autorisant plus d’un déplacement par tour lorsque le gardien est en mode poursuite.
+    </p>
+</section>
+<section>
+    <h2>Les deux modes de comportement des gardiens</h2>
+
+    <p>
+        Dans la version finale de notre simulation, les gardiens ne se déplaceront plus uniquement
+        de manière aléatoire. Leur comportement sera organisé en deux modes principaux, afin de rendre
+        la simulation plus réaliste et plus dynamique. Ces deux modes représentent deux états différents
+        du gardien : un état normal de surveillance et un état d’alerte lorsqu’un intrus est détecté.
+    </p>
+
+    <h3>Mode 1 : Recherche d’intrus (mode normal)</h3>
+    <p>
+        Le premier mode est le mode de recherche d’intrus. Dans ce mode, le gardien se déplace sur la carte
+        sans avoir détecté d’intrus dans sa zone de vision. Il est dans un état de surveillance classique :
+        il patrouille dans la zone, explore la carte et change de direction de temps en temps.
+    </p>
+    <p>
+        Ce mode correspond à une situation où aucun intrus n’a encore été repéré. Le gardien ne sait pas
+        où se trouve l’ennemi, donc il n’a pas de direction précise à suivre. Son déplacement peut être
+        aléatoire ou basé sur une logique simple de patrouille. L’objectif de ce mode est de couvrir
+        l’espace et d’augmenter les chances de détecter un intrus.
+    </p>
+    <p>
+        Dans ce mode, la vitesse du gardien est normale. Il n’y a pas d’urgence particulière,
+        car aucune menace directe n’a été repérée. Le gardien est simplement en train d’observer
+        et de parcourir la carte.
+    </p>
+
+    <h3>Mode 2 : Alerte et poursuite</h3>
+    <p>
+        Le second mode est le mode d’alerte. Ce mode est activé lorsqu’un intrus entre dans le
+        champ de vision du gardien. La vision représente une zone devant le gardien, et si un intrus
+        se trouve dans cette zone, le gardien est capable de le détecter.
+    </p>
+    <p>
+        Dès qu’un intrus est repéré, le gardien change d’état : il passe du mode de recherche
+        au mode d’alerte. Dans ce mode, le gardien ne se déplace plus au hasard. Son objectif devient
+        clair et précis : il doit se rapprocher de l’intrus pour l’attraper.
+    </p>
+    <p>
+        Pour rendre cette situation plus dynamique et plus compréhensible visuellement, nous
+        introduisons une notion de “course fictive”. Cela signifie que lorsque le gardien détecte
+        un intrus, sa vitesse augmente. Il devient plus rapide, comme s’il se mettait à courir
+        pour rattraper sa cible.
+    </p>
+    <p>
+        Cette augmentation de vitesse permet de simuler une réaction plus réaliste :
+        un gardien qui voit un intrus ne continue pas à se déplacer tranquillement,
+        il accélère pour l’intercepter. Cela crée une tension dans la simulation et
+        oblige les intrus à réagir plus vite.
+    </p>
+    <p>
+        Concrètement, cette vitesse peut être représentée de manière simple dans la simulation :
+        le gardien peut se déplacer plus souvent, ou avec un temps d’attente plus court entre
+        deux déplacements. Le résultat visuel sera le même : le gardien semblera plus rapide
+        lorsqu’il poursuit un intrus.
+    </p>
+</section>
+<section>
+    <h2>Contraintes : obstacles, limites et règles</h2>
+    <p>
+        Comme les intrus, les gardiens sont soumis aux obstacles et aux limites de la carte. Un gardien ne doit pas traverser un obstacle
+        et ne doit pas sortir de la grille. Ces règles garantissent que la simulation reste cohérente.
+    </p>
+    <p>
+        À ce stade du projet, nous gérons déjà la règle la plus importante : si la case cible est un obstacle, le déplacement n’est pas autorisé.
+        Ensuite, nous ajouterons les collisions avec les intrus, la poursuite et la logique de capture.
+    </p>
+</section>
+<section>
+    <h2>Comportements futurs prévus pour les gardiens</h2>
+    <ul>
+        <li><strong>Ajout d’une zone de vision :</strong>chaque gardien possédera une zone de vision devant lui,représentée visuellement sur la grille.</li>
+        <li><strong>Mode recherche :</strong>lorsque le gardien ne voit aucun intrus, il patrouille normalement sur la carte avec un déplacement simple.</li>
+        <li><strong>Détection d’un intrus :</strong>si un intrus entre dans la zone de vision du gardien,celui-ci change automatiquement d’état.</li>
+        <li><strong>Passage en mode alerte :</strong>le gardien abandonne le déplacement aléatoire et se concentre sur l’intrus détecté.</li>
+        <li><strong>Poursuite de l’intrus :</strong>le gardien choisit une direction qui le rapproche de la position de l’intrus afin de le rattraper. </li>
+        <li><strong>Augmentation de la vitesse :</strong>en mode alerte, le gardien accélère pour simuler une course fictive et rendre la poursuite plus dynamique.</li>
+        <li><strong>Capture de l’intrus :</strong>si le gardien atteint la même case qu’un intrus,celui-ci est capturé et disparaît de la simulation.</li>
+        <li><strong>Fin de partie possible :</strong>si tous les intrus sont capturés,la simulation peut s’arrêter automatiquement.</li>
+    </ul>
+</section>
+</main>
+<footer class="site-footer">
+
+  <table class="footer-top">
+    <tr>
+      <td>
+        <a class="footer-top-link" href="#top">Retour en haut</a>
+      </td>
+    </tr>
+  </table>
+  <table class="footer-alc">
+    <tr>
+      <td class="footer-col">
+        <strong>Autre redirections</strong>
+        <ul class="footer-links">
+            <li><a href="index.html">->Accueil</a></li>
+            <li><a href="intrus.html">->Intrus</a></li>
+            <li><a href="gardiens.html">->Gardiens</a></li>
+            <li><a href="interface.html">->Interface</a></li>
+            <li><a href="deplacements.html">->Deplacements</a></li>
+            <li><a href="map.html">->Map</a></li>
+            <li><a href="aide.html">->Aide</a></li>
+        </ul>
+      </td>
+      <td class="footer-col">
+        <p class="footer-text">
+          <strong>Auteurs :</strong> Rayan Moulai & Anis Zine Abidine & Rayan Lanouni <br>
+          <em>Licence Informatique L2 CYU<br>Année 2025–2026<br>Analyser les métadonnées d’un fichier MP3</em>
+        </p>
+      </td>
+      <td class="footer-col">
+        <img id="logobas" src="images/2eme.png" alt="logblanc"><br>
+        <span> 
+            CY Cergy Paris Université<br>
+            33 Boulevard du Port<br>
+            95011 Cergy-Pontoise<br>
+            01 34 25 60 00
+        </span>
+      </td>
+    </tr>
+</table>
+</footer>
+<a href="aide.html" class="aide" target="_blank">Besoin d'aide ?</a>
+</body>
+</html>
+

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Intru</title>
+  <link rel="icon" type="image/jpeg" href="images/icon.jpg">
+  <meta name="intrus" content="description">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+
+    <table class="header-table">
+        <tr>
+            <td>
+                <img id="logo" src="images/1er.png" alt="CY Université">
+            </td>
+            <td class="header-certer" >
+                <h1>Intrus</h1>
+            </td>
+            <td class="qtf">
+                <p class="header-meta">
+                    <strong>L2 Informatique CY Université</strong><br>
+                    Année 2025–2026
+                </p>
+                <img id="scndlogo" src="images/france.jpg" alt="France">
+            </td>
+        </tr>
+    </table>
+    <nav class="main-nav">
+        <a href="index.html" class="active">Accueil</a>
+        <a href="intrus.html" class="active">Intrus</a>
+        <a href="gardiens.html" class="active">Gardiens</a>
+        <a href="interface.html" class="active">Interface</a>
+        <a href="deplacements.html" class="active">Déplacements</a>
+        <a href="map.html" class="active">Map</a>
+        <a href="aide.html" class="active">Aide</a>
+    </nav>
+</header>
+<br>
+<main>
+<section class="container">
+    <h2>Présentation générale des intrus</h2>
+    <p>
+        Dans notre simulation, les <strong>intrus</strong> représentent les agents qui essayent d’atteindre un objectif.
+        Ils évoluent sur une grille (la carte) composée de cases. Chaque intrus occupe à tout moment une position précise
+        (une case). L’idée est de créer un comportement simple au départ, puis de le rendre plus logique et plus stratégique
+        au fur et à mesure de l’avancement du projet.
+    </p>
+    <p>
+        Les intrus sont importants parce qu’ils donnent une direction au “jeu” : ce sont eux qui déclenchent la majorité des
+        actions. Quand un intrus bouge, cela peut provoquer des événements : il peut rencontrer une pièce, il peut être bloqué
+        par un obstacle, ou encore croiser un gardien. Le fonctionnement de l’intrus est donc au centre de la simulation.
+    </p>
+    <p>
+        Dans notre <strong>premier avancement</strong>, les intrus se déplacent de façon <strong>aléatoire</strong>.
+        Cela permet de tester l’animation et de valider l’affichage des entités sur la carte. Même si ce comportement est simple,
+        il est utile pour vérifier que tout le moteur fonctionne correctement avant d’ajouter une logique plus compliquée.
+    </p>
+    <figure>
+        <img class="fmt-img" src="images/intrus.png" alt="intru">
+    </figure>
+    <p class="centrage"><em><strong>Représentation d'un intru.</strong></em></p>
+</section>
+<hr>
+<section>
+    <h2>Objectif principal : récupérer les pièces</h2>
+    <p>
+        Le but principal d’un intrus est de <strong>collecter des pièces</strong>. Les pièces sont des éléments placés sur la carte.
+        Une pièce occupe une case précise, exactement comme un intrus. Lorsqu’un intrus passe sur une case contenant une pièce,
+        on considère que la pièce est récupérée : elle doit alors <strong>disparaître de la grille</strong> et le <strong>score doit augmenter</strong>.
+    </p>
+    <p>
+        Cette mécanique simple est très importante car elle permet d’introduire un principe d’objectif mesurable :
+        on peut suivre une partie en observant le score (combien de pièces ont été récupérées) et on peut comparer deux simulations
+        en voyant si les intrus ont été efficaces.
+    </p>
+    <p>
+        Plus tard, cette collecte de pièces nous permettra aussi de mettre en place des comportements plus avancés :
+        par exemple, l’intrus pourrait chercher la pièce la plus proche, ou choisir une trajectoire qui évite les zones dangereuses.
+        Mais pour l’instant, l’objectif est d’avoir une base stable : la pièce existe, elle est affichée, et on pourra ensuite ajouter la règle de collecte.
+    </p>
+</section>
+<hr>
+<section>
+    <h2>Le mode de comportement des intrus</h2>
+
+    <p>
+        Contrairement aux gardiens, les intrus ne possèdent pas plusieurs états de comportement.
+        Leur logique est volontairement plus simple : ils n’ont qu’un seul mode de fonctionnement,
+        qui est le mode de recherche de pièces. Cette simplicité correspond à l’idée générale du jeu :
+        les intrus sont déjà considérés comme étant “en fuite” par nature, puisqu’ils essayent de
+        récupérer des pièces tout en évitant les gardiens.
+    </p>
+
+    <h3>Mode unique : recherche de pièces</h3>
+    <p>
+        Le mode principal et unique des intrus est le mode de recherche de pièces.
+        Dans ce mode, l’intrus se déplace sur la carte dans le but de trouver et de
+        collecter des pièces. Chaque pièce représente un objectif à atteindre.
+        Lorsqu’un intrus passe sur une case contenant une pièce, celle-ci est récupérée
+        et le score augmente.
+    </p>
+    <p>
+        Dans les premières versions de la simulation, le déplacement de l’intrus est
+        aléatoire. Cela permet d’avoir une animation simple et de vérifier que les
+        interactions de base fonctionnent correctement. Cependant, ce déplacement
+        aléatoire ne représente qu’une étape intermédiaire. L’objectif final est
+        d’orienter progressivement les intrus vers les pièces présentes sur la carte.
+    </p>
+    <p>
+        Plus tard dans le projet, l’intrus pourra adopter un comportement un peu plus
+        intelligent. Par exemple, s’il repère une pièce dans une certaine zone ou s’il
+        existe une règle simple pour choisir une direction, il pourra essayer de se
+        rapprocher de cette pièce au lieu de se déplacer totalement au hasard.
+        Ce comportement restera simple et compréhensible, afin de respecter l’esprit
+        du projet et de ne pas créer une intelligence artificielle trop complexe.
+    </p>
+
+    <h3>Vitesse constante</h3>
+    <p>
+        Contrairement aux gardiens, les intrus ne changent pas de vitesse en fonction
+        des situations. Leur vitesse reste constante tout au long de la simulation.
+        Cela permet de garder une logique simple et cohérente : les intrus ne deviennent
+        ni plus rapides ni plus lents selon les événements.
+    </p>
+    <p>
+        Cette décision s’explique par le rôle même de l’intrus dans le jeu. L’intrus est
+        déjà considéré comme étant en fuite dès le début de la simulation. Il n’a donc
+        pas besoin d’un mode spécial pour fuir ou accélérer. Sa mission reste toujours
+        la même : se déplacer, chercher des pièces, et éviter les gardiens.
+    </p>
+
+    <h3>un seul mode pour les intrus </h3>
+    <p>
+        Le fait de donner un seul mode aux intrus simplifie la logique du jeu et
+        rend leur comportement plus facile à comprendre. L’intrus a un objectif clair
+        et constant : récupérer des pièces. Il n’a pas besoin de changer d’état ou
+        de stratégie complexe.
+    </p>
+    <p>
+        Cette simplicité est aussi utile pour le développement du projet. Elle permet
+        de se concentrer sur les interactions principales, comme la collecte de pièces
+        ou la capture par les gardiens, sans ajouter trop de complexité dès le début.
+        Le comportement des intrus reste donc direct et lisible.
+    </p>
+</section>
+<hr>
+<section>
+    <h2>Déplacement actuel (premier avancement) : aléatoire et simple</h2>
+    <p>
+        Pour notre premier point d’avancement, nous utilisons un déplacement simple : à chaque tour de simulation (itération),
+        l’intrus choisit une direction au hasard parmi les quatre directions possibles (haut, bas, gauche, droite).
+        Il tente ensuite d’avancer d’une case dans cette direction.
+    </p>
+    <p>
+        Ce déplacement peut être vu comme un comportement de base, qui ne cherche pas l’efficacité. Il sert surtout à :
+    </p>
+    <ul>
+        <li>vérifier que l’écran se met à jour correctement (animation),</li>
+        <li>vérifier que la position change bien sur la carte,</li>
+        <li>tester l’interaction avec les obstacles (cases bloquantes),</li>
+        <li>voir le spawn aléatoire des entités et observer différentes configurations.</li>
+    </ul>
+    <p>
+        Ce modèle “au hasard” est volontairement simple, car on veut d’abord un projet qui fonctionne, avant d’ajouter
+        des comportements plus complexes. C’est exactement la logique d’un avancement progressif : d’abord l’affichage et un mouvement,
+        ensuite les règles, puis enfin l’intelligence.
+    </p>
+</section>
+<hr>
+<section>
+    <h2>Contraintes : obstacles, limites de la carte, collisions</h2>
+    <p>
+        Même pour un déplacement simple, il faut gérer des contraintes :
+        un intrus ne doit pas sortir de la carte, et il ne doit pas marcher sur une case impossible.
+        Dans notre simulation, les <strong>obstacles</strong> sont des cases bloquantes : si un intrus essaie d’entrer sur une case
+        contenant un obstacle, il doit rester sur place.
+    </p>
+    <p>
+        Cette notion de blocage est essentielle parce qu’elle rend l’environnement plus réaliste : la carte n’est pas vide,
+        elle contient des zones qui limitent le déplacement. Cela permettra plus tard de rendre les stratégies plus intéressantes :
+        un intrus devra trouver un chemin, contourner des obstacles, ou changer d’objectif.
+    </p>
+    <p>
+        Pour gérer ce point de manière claire, nous prévoyons une classe dédiée aux collisions (par exemple “Collision”) afin de vérifier
+        si une case est occupée par un obstacle ou non. Cette approche aide à garder le code organisé : le déplacement appelle la collision,
+        et la collision décide si la case est autorisée.
+    </p>
+</section>
+<hr>
+<section>
+    <h2>Comportements futurs prévus pour les intrus</h2>
+    <ul>
+        <li><strong>Recherche de pièces</strong> : l’intrus peut chercher activement une pièce au lieu de se déplacer au hasard.</li>
+        <li><strong>Évitement</strong> : si l’intrus détecte un danger (gardien proche ou vision), il peut changer de direction.</li>
+        <li><strong>Priorité</strong> : si plusieurs pièces existent, il peut choisir celle qui semble la plus accessible.</li>
+        <li><strong>Gestion de fin</strong> : si un intrus est capturé, il disparaît ; si aucun intrus ne reste, la simulation se termine.</li>
+        <li><strong>2 intrus</strong> : Avoir 2 type d'intrus avec un intru qui va a une vitesse superieur a l'autre sa sera le seul facteur qui changera avec l'image qui chanagera évidement.</li>
+    </ul>
+</section>
+</main>
+<footer class="site-footer">
+
+  <table class="footer-top">
+    <tr>
+      <td>
+        <a class="footer-top-link" href="#top">Retour en haut</a>
+      </td>
+    </tr>
+  </table>
+  <table class="footer-alc">
+    <tr>
+      <td class="footer-col">
+        <strong>Autre redirections</strong>
+        <ul class="footer-links">
+            <li><a href="index.html">->Accueil</a></li>
+            <li><a href="intrus.html">->Intrus</a></li>
+            <li><a href="gardiens.html">->Gardiens</a></li>
+            <li><a href="interface.html">->Interface</a></li>
+            <li><a href="deplacements.html">->Deplacements</a></li>
+            <li><a href="map.html">->Map</a></li>
+            <li><a href="aide.html">->Aide</a></li>
+        </ul>
+      </td>
+      <td class="footer-col">
+        <p class="footer-text">
+          <strong>Auteurs :</strong> Rayan Moulai & Anis Zine Abidine & Rayan Lanouni <br>
+          <em>Licence Informatique L2 CYU<br>Année 2025–2026<br>Analyser les métadonnées d’un fichier MP3</em>
+        </p>
+      </td>
+      <td class="footer-col">
+        <img id="logobas" src="images/2eme.png" alt="logblanc"><br>
+        <span> 
+            CY Cergy Paris Université<br>
+            33 Boulevard du Port<br>
+            95011 Cergy-Pontoise<br>
+            01 34 25 60 00
+        </span>
+      </td>
+    </tr>
+</table>
+</footer>
+<a href="aide.html" class="aide" target="_blank">Besoin d'aide ?</a>
+</body>
+</html>
+
+

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Deplacement</title>
+  <link rel="icon" type="image/jpeg" href="images/icon.jpg">
+  <meta name="deplacement" content="description">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+
+    <table class="header-table">
+        <tr>
+            <td>
+                <img id="logo" src="images/1er.png" alt="CY Université">
+            </td>
+            <td class="header-certer" >
+                <h1>Déplacement</h1>
+            </td>
+            <td class="qtf">
+                <p class="header-meta">
+                    <strong>L2 Informatique CY Université</strong><br>
+                    Année 2025–2026
+                </p>
+                <img id="scndlogo" src="images/france.jpg" alt="France">
+            </td>
+        </tr>
+    </table>
+    <nav class="main-nav">
+        <a href="index.html" class="active">Accueil</a>
+        <a href="intrus.html" class="active">Intrus</a>
+        <a href="gardiens.html" class="active">Gardiens</a>
+        <a href="interface.html" class="active">Interface</a>
+        <a href="deplacements.html" class="active">Déplacements</a>
+        <a href="map.html" class="active">Map</a>
+        <a href="aide.html" class="active">Aide</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section>
+        <h2>Principe général du déplacement</h2>
+
+        <p>
+            Dans notre simulation, les agents se déplacent sur une grille composée de cases.
+            Chaque déplacement correspond à un passage d’une case vers une autre.
+        </p>
+
+        <p>À un instant donné :</p>
+        <ul>
+            <li>Un agent occupe une seule case.</li>
+            <li>Une case ne peut contenir qu’un seul agent.</li>
+            <li>Le déplacement se fait d’une case adjacente vers une autre.</li>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Directions possibles</h2>
+
+        <p>
+            Les déplacements sont limités à des directions simples pour garantir une simulation claire et lisible.
+        </p>
+
+        <p>Les directions autorisées sont limitées à quatre :</p>
+        <ul>
+            <li>Haut</li>
+            <li>Bas</li>
+            <li>Gauche</li>
+            <li>Droite</li>
+        </ul>
+
+        <p>Cette restriction permet :</p>
+        <ul>
+            <li>Une meilleure lisibilité des trajectoires.</li>
+            <li>Une gestion claire des obstacles.</li>
+            <li>Une simplification du calcul de vision directionnelle.</li>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Contraintes du déplacement</h2>
+
+        <p>
+            Le déplacement d’un agent est soumis à plusieurs contraintes afin de garantir
+            la cohérence de la simulation.
+        </p>
+
+        <p>Un agent ne peut pas se déplacer si :</p>
+        <ul>
+            <li>La case cible est un obstacle.</li>
+            <li>La case cible est en dehors de la grille.</li>
+            <li>La case cible est occupée (selon la règle définie).</li>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Définition de la vitesse</h2>
+
+        <p>
+            La vitesse d’un agent correspond à la fréquence de ses déplacements dans le temps.
+        </p>
+
+        <p>Concrètement :</p>
+        <ul>
+            <li>Une vitesse faible = déplacement moins fréquent.</li>
+            <li>Une vitesse élevée = déplacement plus fréquent.</li>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Différence entre gardiens et intrus</h2>
+
+        <p>
+            Les gardiens et les intrus n’ont pas forcément la même vitesse.
+        </p>
+
+        <p>Cela permet de créer un déséquilibre stratégique :</p>
+        <ul>
+            <li>Un gardien plus rapide augmente la pression.</li>
+            <li>Un intrus plus rapide augmente ses chances de fuite.</li>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>Ouverture du champ de vision</h2>
+
+        <p>
+            Le champ de vision dépend d’un angle d’ouverture.
+        </p>
+
+        <p>Une ouverture large permet :</p>
+        <ul>
+            <li>Une meilleure détection.</li>
+            <li>Une couverture plus grande de l’environnement.</li>
+        </ul>
+
+        <p>Une ouverture réduite crée :</p>
+        <ul>
+            <li>Un angle mort.</li>
+            <li>Une nécessité d’orientation stratégique.</li>
+        </ul>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>État de recherche</h2>
+
+        <p>
+            Lorsqu’un gardien ne voit aucun intrus dans sa zone de vision,
+            il reste en mode recherche.
+        </p>
+
+        <p>Si un obstacle se situe entre le gardien et l’intrus :</p>
+        <ul>
+            <li>L’intrus n’est pas détecté.</li>
+            <li>Le gardien reste en état de recherche.</li>
+        </ul>
+
+        <p>Cette règle est essentielle car elle permet :</p>
+        <ul>
+            <li>Aux intrus de se cacher temporairement.</li>
+            <li>De créer des situations stratégiques.</li>
+            <li>De générer des poursuites interrompues.</li>
+        </ul>
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <table class="footer-top">
+        <tr>
+            <td>
+                <a class="footer-top-link" href="#top">Retour en haut</a>
+            </td>
+        </tr>
+    </table>
+
+    <table class="footer-alc">
+        <tr>
+            <td class="footer-col">
+                <strong>Autre redirections</strong>
+                <ul class="footer-links">
+                    <li><a href="index.html">->Accueil</a></li>
+                    <li><a href="intrus.html">->Intrus</a></li>
+                    <li><a href="gardiens.html">->Gardiens</a></li>
+                    <li><a href="interface.html">->Interface</a></li>
+                    <li><a href="deplacements.html">->Deplacements</a></li>
+                    <li><a href="map.html">->Map</a></li>
+                    <li><a href="aide.html">->Aide</a></li>
+                </ul>
+            </td>
+
+            <td class="footer-col">
+                <p class="footer-text">
+                    <strong>Auteurs :</strong> Rayan Moulai & Anis Zine Abidine & Rayan Lanouni<br>
+                    <em>Licence Informatique L2 CYU<br>Année 2025–2026</em>
+                </p>
+            </td>
+        <td class="footer-col">
+        <img id="logobas" src="images/2eme.png" alt="logblanc"><br>
+        <span> 
+            CY Cergy Paris Université<br>
+            33 Boulevard du Port<br>
+            95011 Cergy-Pontoise<br>
+            01 34 25 60 00
+        </span>
+      </td>
+    </tr>
+</table>
+</footer>
+<a href="aide.html" class="aide" target="_blank">Besoin d'aide ?</a>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Map</title>
+  <link rel="icon" type="image/jpeg" href="images/icon.jpg">
+  <meta name="map" content="description">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+
+    <table class="header-table">
+        <tr>
+            <td>
+                <img id="logo" src="images/1er.png" alt="CY Université">
+            </td>
+            <td class="header-certer" >
+                <h1>La Map</h1>
+            </td>
+            <td class="qtf">
+                <p class="header-meta">
+                    <strong>L2 Informatique CY Université</strong><br>
+                    Année 2025–2026
+                </p>
+                <img id="scndlogo" src="images/france.jpg" alt="France">
+            </td>
+        </tr>
+    </table>
+    <nav class="main-nav">
+        <a href="index.html" class="active">Accueil</a>
+        <a href="intrus.html" class="active">Intrus</a>
+        <a href="gardiens.html" class="active">Gardiens</a>
+        <a href="interface.html" class="active">Interface</a>
+        <a href="deplacements.html" class="active">Déplacements</a>
+        <a href="map.html" class="active">Map</a>
+        <a href="aide.html" class="active">Aide</a>
+    </nav>
+</header>
+
+<br>
+
+<main class="container">
+
+  <section>
+    <h2>Environnement bidimensionnel fermé</h2>
+    <article>
+      <p>
+        La carte constitue l’élément central de la simulation. Elle représente l’espace dans lequel évoluent tous les agents : gardiens, intrus, obstacles et objets d’intérêt. Sans la map, la simulation ne pourrait exister, car elle fournit le cadre spatial dans lequel toutes les interactions prennent place.
+        La simulation se déroule dans un environnement en deux dimensions représenté par une grille carrée de taille N × N.
+      </p>
+
+      <p>Cette grille est :</p>
+      <ul>
+        <li>Totalement fermée</li>
+        <li>Délimitée par des bords infranchissables</li>
+        <li>Discrète (case par case)</li>
+      </ul>
+
+      <p>Aucun agent ne peut sortir des limites définies.</p>
+      <p>Il n’existe pas de passage latéral (pas de téléportation d’un bord à l’autre).</p>
+
+      <p>Cela signifie que l’espace est strictement contenu et contrôlé.</p>
+    </article>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Organisation en cases</h2>
+    <article>
+      <p>La grille est composée de cases.</p>
+
+      <p>Chaque case :</p>
+      <ul>
+        <li>Possède une position précise (ligne, colonne)</li>
+        <li>Peut être vide ou occupée</li>
+        <li>Ne peut contenir qu’un seul élément principal à la fois</li>
+      </ul>
+
+      <p>Les éléments pouvant occuper une case sont :</p>
+      <ul>
+        <li>Un gardien</li>
+        <li>Un intrus</li>
+        <li>Un obstacle</li>
+        <li>Une pièce</li>
+      </ul>
+
+      <p>Cette règle garantit l’absence de superposition incohérente.</p>
+    </article>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Rôle spatial de la grille</h2>
+    <article>
+      <p>La grille n’est pas simplement un décor.</p>
+
+      <p>Elle joue un rôle actif dans :</p>
+      <ul>
+        <li>La gestion des déplacements</li>
+        <li>La gestion des collisions</li>
+        <li>Le calcul des distances</li>
+        <li>Le calcul de la vision</li>
+      </ul>
+
+      <p>Chaque déplacement correspond à un changement de coordonnées dans cette grille.</p>
+    </article>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Principe de génération automatique</h2>
+    <article>
+      <p>
+        La carte n’est pas dessinée manuellement.
+        Elle est générée automatiquement au lancement de la simulation selon des règles définies.
+      </p>
+
+      <p>Cette génération procédurale permet :</p>
+      <ul>
+        <li>D’obtenir une carte différente à chaque lancement</li>
+        <li>D’éviter la répétitivité</li>
+        <li>De créer des scénarios variés</li>
+      </ul>
+    </article>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Contraintes de génération</h2>
+    <article>
+      <p>La génération respecte plusieurs contraintes importantes :</p>
+      <ul>
+        <li>La carte ne doit pas contenir de zones totalement inaccessibles.</li>
+        <li>Toutes les zones doivent être atteignables.</li>
+        <li>Des couloirs étroits</li>
+        <li>Des zones ouvertes</li>
+        <li>Des zones denses en obstacles</li>
+        <li>Des zones semi-protégées</li>
+      </ul>
+
+      <p>Cette variété rend la simulation plus réaliste et plus stratégique.</p>
+    </article>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Zone des gardiens</h2>
+    <article>
+      <p>Les gardiens apparaissent dans une zone spécifique.</p>
+
+      <p>Cette zone est :</p>
+      <ul>
+        <li>Positionnée stratégiquement</li>
+        <li>Séparée des intrus</li>
+        <li>Conçue pour permettre une exploration progressive</li>
+      </ul>
+    </article>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Zone des intrus</h2>
+    <article>
+      <p>Les intrus apparaissent dans une zone distincte.</p>
+
+      <p>Cette séparation permet :</p>
+      <ul>
+        <li>Un démarrage équilibré</li>
+        <li>Une phase initiale de recherche</li>
+        <li>Une montée progressive en tension</li>
+      </ul>
+    </article>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Nature des obstacles</h2>
+    <article>
+      <p>Les obstacles sont des éléments fixes de l’environnement.</p>
+
+      <p>Ils peuvent représenter :</p>
+      <ul>
+        <li>Des murs</li>
+        <li>Des caisses</li>
+        <li>Des buissons</li>
+        <li>Des structures internes</li>
+      </ul>
+
+      <p>Ils occupent une ou plusieurs cases.</p>
+    </article>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Rôle des obstacles</h2>
+    <article>
+      <p>Les obstacles ont plusieurs fonctions essentielles.</p>
+      <ul>
+        <li>Un agent ne peut pas traverser un obstacle, il doit le contourner.</li>
+        <li>Certains obstacles peuvent bloquer la ligne de vue, un intrus peut donc se cacher derrière un obstacle. Cela ajoute une dimension stratégique.</li>
+        <li>
+          Les obstacles permettent de créer :
+          <ul>
+            <li>Des couloirs</li>
+            <li>Des zones fermées</li>
+            <li>Des passages étroits</li>
+            <li>Des angles morts</li>
+          </ul>
+        </li>
+      </ul>
+    </article>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+
+  <table class="footer-top">
+    <tr>
+      <td>
+        <a class="footer-top-link" href="#top">Retour en haut</a>
+      </td>
+    </tr>
+  </table>
+
+  <table class="footer-alc">
+    <tr>
+      <td class="footer-col">
+        <strong>Autre redirections</strong>
+        <ul class="footer-links">
+          <li><a href="index.html">->Accueil</a></li>
+          <li><a href="intrus.html">->Intrus</a></li>
+          <li><a href="gardiens.html">->Gardiens</a></li>
+          <li><a href="interface.html">->Interface</a></li>
+          <li><a href="deplacements.html">->Deplacements</a></li>
+          <li><a href="map.html">->Map</a></li>
+          <li><a href="aide.html">->Aide</a></li>
+        </ul>
+      </td>
+
+      <td class="footer-col">
+        <p class="footer-text">
+          <strong>Auteurs :</strong> Rayan Moulai & Anis Zine Abidine & Rayan Lanouni <br>
+          <em>Licence Informatique L2 CYU<br>Année 2025–2026<br>Analyser les métadonnées d’un fichier MP3</em>
+        </p>
+      </td>
+
+      <td class="footer-col">
+        <img id="logobas" src="images/2eme.png" alt="logblanc"><br>
+        <p class="footer-text">
+          CY Cergy Paris Université<br>
+          33 Boulevard du Port<br>
+          95011 Cergy-Pontoise<br>
+          01 34 25 60 00
+        </p>
+      </td>
+    </tr>
+  </table>
+
+</footer>
+
+<a href="aide.html" class="aide" target="_blank">Besoin d'aide ?</a>
+
+</body>
+</html>

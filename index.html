@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>acceuil</title>
+  <link rel="icon" type="image/jpeg" href="images/icon.jpg">
+  <meta name="acceuil" content="description">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+
+    <table class="header-table">
+        <tr>
+            <td>
+                <img id="logo" src="images/1er.png" alt="CY Université">
+            </td>
+            <td class="header-certer" >
+                <h1>Acceuil</h1>
+            </td>
+            <td class="qtf">
+                <p class="header-meta">
+                    <strong>L2 Informatique CY Université</strong><br>
+                    Année 2025–2026
+                </p>
+                <img id="scndlogo" src="images/france.jpg" alt="France">
+            </td>
+        </tr>
+    </table>
+    <nav class="main-nav">
+        <a href="index.html" class="active">Accueil</a>
+        <a href="intrus.html" class="active">Intrus</a>
+        <a href="gardiens.html" class="active">Gardiens</a>
+        <a href="interface.html" class="active">Interface</a>
+        <a href="deplacements.html" class="active">Déplacements</a>
+        <a href="map.html" class="active">Map</a>
+        <a href="aide.html" class="active">Aide</a>
+    </nav>
+</header>
+<br>
+
+<main class="container">
+
+  <section>
+    <h2>Présentation générale</h2>
+    <p>
+      Ce site web est une page de présentation liée à notre <strong>premier point d’avancement</strong>
+      du projet GLP. L’objectif est de présenter l’idée générale de la simulation, ce qui est déjà
+      fonctionnel dans l’application, et ce qui sera ajouté progressivement dans les prochaines mises à jour.
+    </p>
+    <p>
+      Ce projet consiste à développer une application de simulation basée sur une grille.
+      La simulation met en scène plusieurs éléments interactifs (intrus, gardiens, pièces et obstacles)
+      qui évoluent sur une carte composée de cases.Comme dit précédement le projet consiste à réaliser une simulation sur une <strong>grille</strong> (map) dans laquelle
+      des entités apparaissent et se déplacent : <strong>intrus</strong>, <strong>gardiens</strong>,
+      <strong>pièces</strong> et <strong>obstacles</strong>. Le but final du projet est le suivant :
+      les <strong>intrus</strong> doivent <strong>attraper des pièces</strong> pour marquer des points,
+      tandis que les <strong>gardiens</strong> doivent <strong>attraper les intrus</strong> pour les empêcher
+      de collecter trop de pièces.
+    </p>
+    <p>
+      L’application est pensée comme une simulation contrôlable par l’utilisateur : il pourra lancer
+      la simulation, l’arrêter, et réinitialiser l’état de l’environnement. Le comportement exact des
+      entités est défini progressivement, au fur et à mesure de l’avancement du projet, afin de respecter
+      une méthode de développement par étapes.
+    </p>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Fonctionnement de la simulation</h2>
+    <p>
+      La simulation se déroule sur une carte (Map) qui représente un espace discret découpé en cases (Block).
+      À chaque moment, les agents ont une position qui correspond à une case de la grille. L’affichage montre
+      la carte sous forme de quadrillage, et chaque entité est représentée par une image (sprite) afin que
+      l’utilisateur puisse les distinguer facilement.
+    </p>
+    <p>
+      La logique de la simulation est basée sur des “tours” (ou itérations). À chaque tour, le moteur peut
+      déclencher des actions (par exemple un déplacement, une vérification, un événement). Cette approche permet
+      une animation simple, car l’écran est régulièrement rafraîchi : on met à jour la situation, puis on redessine.
+    </p>
+
+    <p>
+      Une partie importante du projet concerne l’IHM (interface graphique). Le projet comporte deux aspects
+      fonctionnels essentiels : la saisie (contrôles utilisateur, boutons) et l’affichage (dessin de la grille,
+      dessin des entités, informations comme le score ou le temps). L’utilisateur doit pouvoir comprendre rapidement
+      ce qu’il se passe dans la simulation juste en regardant la grille.
+      Nous réutilisons le noyau fourni par le professeur : la structure générale du moteur et l’organisation
+      des éléments sont conservées, et nous adaptons les classes et la logique pour répondre au cahier des charges.
+      Ce site résume la partie déjà réalisée, sans entrer dans les détails techniques du code ligne par ligne.
+    </p>
+
+    <p>Les entité présent sur la carte sont Intrus, Gardien, Pieces et Obstacle :</p>
+    <ul>
+      <li><strong>Intrus</strong> : ce sont les agents “actifs” qui cherchent à accomplir un objectif (par exemple récupérer des pièces).</li>
+      <li><strong>Gardiens</strong> : ce sont des agents “opposants” chargés de surveiller et d’empêcher les intrus d’atteindre leur objectif.</li>
+      <li><strong>Pièces</strong> : ce sont des objets collectables. Elles sont placées sur la grille et peuvent être ramassées.</li>
+      <li><strong>Obstacles</strong> : ce sont des cases bloquantes. Elles empêchent les déplacements et structurent l’espace.</li>
+    </ul>
+
+    <p>
+      Ces entité sont générer aleatoirement sur la carte(Map), afin d'obtenir des scénarios différents a chaque lancement.
+    </p>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Interactions attendues</h2>
+    <p>
+      Même si l’ensemble des comportements est développé progressivement, on prévoit plusieurs interactions
+      de base entre les entités. L’idée est d’obtenir une simulation “vivante”, où certains événements peuvent
+      se produire lorsque des éléments se rencontrent sur une même case.
+    </p>
+    <ul>
+      <li>Un intrus peut se déplacer sur la grille tant qu’il ne rencontre pas un obstacle.</li>
+      <li>Un intrus peut récupérer une pièce lorsqu’il passe sur sa case.</li>
+      <li>Un gardien peut intercepter un intrus lorsqu’il le rencontre.</li>
+      <li>Le score peut évoluer en fonction des pièces collectées.</li>
+      <li>La simulation peut se terminer selon des conditions simples (ex : plus d’intrus).</li>
+    </ul>
+    <p>
+      Pour garder une structure claire, ces interactions sont gérées par des classes dédiées (ex : une classe
+      de collision pour détecter si une case est bloquante). Cela permet de séparer les responsabilités et
+      de faire évoluer le projet facilement.
+    </p>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>But final de notre simulation</h2>
+    <p>
+      Le but final du projet n’est pas seulement d’afficher des objets : la simulation doit intégrer une logique de jeu
+      plus avancée, avec des règles et des interactions.
+    </p>
+    <ul>
+      <li>
+        <strong>Objectif Intrus</strong> : se déplacer sur la carte pour <strong>collecter des pièces</strong>.
+        Lorsqu’un intrus passe sur une case contenant une pièce, la pièce disparaît et le score augmente.
+      </li>
+      <li>
+        <strong>Objectif Gardien</strong> : surveiller l’espace et <strong>intercepter les intrus</strong>.
+        Lorsqu’un gardien atteint la même case qu’un intrus, l’intrus est capturé (il disparaît ou devient inactif).
+      </li>
+      <li>
+        <strong>Obstacle</strong> : structure la carte et bloque certaines trajectoires, ce qui rend les déplacements plus intéressants.
+      </li>
+    </ul>
+    <p>
+      Au fil du projet, nous allons passer d’une animation simple (déplacement aléatoire) à une simulation plus intelligente
+      (recherche, poursuite, priorités, collisions, score, fin de partie).
+    </p>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Organisation codage du projet.</h2>
+    <p>
+      Le code est structuré en plusieurs parties, chacune ayant un rôle. Sans entrer dans des détails techniques,
+      on distingue généralement :
+    </p>
+    <ul>
+      <li>les classes qui modélisent la carte et les positions (Map, Block),</li>
+      <li>les classes qui représentent les entités (intrus, gardiens, pièces, obstacles),</li>
+      <li>le moteur de simulation (gestion des tours, mise à jour),</li>
+      <li>l’affichage (dessin de la grille et des sprites),</li>
+      <li>les règles simples (par exemple la gestion des collisions).</li>
+    </ul>
+    <p>
+      Cette organisation aide à construire un projet propre, compréhensible, et modifiable. Elle permet aussi
+      de respecter les contraintes du cours : réutiliser le noyau fourni, travailler avec des classes de données,
+      et avancer étape par étape.
+    </p>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>État actuel du projet (premier avancement)</h2>
+    <p>
+      À l’heure actuelle, notre simulation contient déjà plusieurs éléments visibles et un comportement simple
+      qui permet de voir une animation. Cet avancement correspond aux premières fonctionnalités attendues :
+      <strong>affichage</strong> et <strong>comportement de base</strong>.
+    </p>
+    <ul>
+      <li><strong>Affichage de la grille</strong> : la carte (Map) est affichée sous forme de quadrillage.</li>
+      <li><strong>Spawn aléatoire</strong> : les intrus, gardiens, pièces et obstacles apparaissent à des positions aléatoires.</li>
+      <li><strong>Affichage des entités</strong> : intrus, gardiens, pièces et obstacles sont visibles grâce à leurs sprites.</li>
+      <li><strong>Déplacement aléatoire simple</strong> : les intrus et les gardiens peuvent se déplacer de manière aléatoire.</li>
+      <li><strong>Obstacle bloquant</strong> : pour l’instant, un agent n’avance pas si la case cible est un obstacle.</li>
+    </ul>
+    <p>
+      L’idée de cet avancement est d’avoir une base solide et observable : on voit la carte, on voit les entités,
+      et on voit un comportement de déplacement simple qui permet de tester et valider l’affichage et la logique de base.
+    </p>
+
+    <p class="centrage"><strong><em>
+      -> demonstration de notre point d'avancement numéro 1 :
+    </em></strong></p>
+
+    <video width="800" controls class="video" aria-label="presentation">
+      <source src="video/rendu1.mp4" type="video/mp4">
+    </video>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Fonctionnalités prévues prochainement (prochaines mises à jour)</h2>
+    <p>
+      Certaines fonctionnalités importantes ne sont pas encore intégrées car elles font partie des étapes suivantes.
+      Elles seront ajoutées progressivement afin de respecter la méthode d’avancement et le cahier des charges.
+    </p>
+    <ul>
+      <li><strong>Boutons Start / Stop / Clear</strong> : contrôle utilisateur pour lancer, arrêter et réinitialiser la simulation.</li>
+      <li><strong>Score</strong> : affichage du score (lié aux pièces récupérées par les intrus).</li>
+      <li><strong>Timer / Chronomètre</strong> : affichage du temps de simulation, utile pour suivre une partie.</li>
+    </ul>
+    <p>
+      Ces éléments seront placés dans l’IHM (par exemple : boutons au-dessus de la grille, score/temps à droite),
+      mais ils arriveront dans les prochaines versions une fois que la logique de base des interactions sera stable.<br>
+      Après la base (affichage + déplacement), l’objectif est d’ajouter des comportements plus réalistes.
+      Nous prévoyons plusieurs améliorations, toujours en restant dans l’esprit du cahier des charges.
+    </p>
+    <ul>
+      <li>
+        <strong>Affichage de la vision</strong> : afficher une zone (par exemple en rouge transparent) qui représente
+        ce que “voit” un gardien (ou un intrus). Cela permet de comprendre visuellement la surveillance.
+      </li>
+      <li>
+        <strong>Recherche de pièces</strong> : au lieu de se déplacer au hasard, un intrus pourra choisir une direction
+        pour se rapprocher d’une pièce lorsqu’il en détecte une ou lorsqu’il a une stratégie simple.
+      </li>
+      <li>
+        <strong>Recherche d’intrus</strong> : les gardiens pourront détecter un intrus dans leur zone de vision et changer
+        leur comportement pour le poursuivre.
+      </li>
+      <li>
+        <strong>Vitesse des gardiens</strong> : la vitesse d’un gardien pourra augmenter lorsqu’un intrus est repéré dans sa vision,
+        afin de simuler une “poursuite” plus dynamique et plus logique.
+      </li>
+      <li>
+        <strong>Poursuite</strong> : lorsqu’un intrus est détecté, le gardien peut suivre sa position et se rapprocher
+        progressivement au lieu de se déplacer au hasard.
+      </li>
+    </ul>
+    <p>
+      L’idée est de passer d’un comportement aléatoire à un comportement piloté par des règles simples : repérage,
+      décision, déplacement, collision et conséquence.
+    </p>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Tableau sur le suivie et exigence de notre projet.</h2>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Élément du cahier des charges</th>
+          <th>Ce que cela signifie dans le projet</th>
+          <th>État actuel</th>
+          <th>Prévu ensuite</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>IHM : Affichage</td>
+          <td>Afficher la grille et les entités (intrus, gardiens, pièces, obstacles).</td>
+          <td>Fait (grille + sprites)</td>
+          <td>Affichage score, timer, vision</td>
+        </tr>
+        <tr>
+          <td>IHM : Saisie</td>
+          <td>Contrôles utilisateur (Start/Stop/Clear) pour piloter la simulation.</td>
+          <td>À faire</td>
+          <td>Ajout des boutons dans l’IHM</td>
+        </tr>
+        <tr>
+          <td>Réutilisation du noyau prof</td>
+          <td>Conserver la structure (Map/Block, boucle de simulation, affichage Swing) et adapter.</td>
+          <td>En cours / respecté</td>
+          <td>Continuer sans réinventer le moteur</td>
+        </tr>
+        <tr>
+          <td>Modélisation des éléments</td>
+          <td>Classes de données pour intrus, gardiens, pièces, obstacles, vision, etc.</td>
+          <td>Fait (base)</td>
+          <td>Étendre les règles et interactions</td>
+        </tr>
+        <tr>
+          <td>Interactions</td>
+          <td>Intrus collecte pièce, gardien capture intrus, obstacles bloquent.</td>
+          <td>Obstacle bloquant : fait</td>
+          <td>Collecte pièce + capture intrus + fin</td>
+        </tr>
+        <tr>
+          <td>Animation / Simulation</td>
+          <td>Déplacements et mise à jour à chaque tour avec rafraîchissement de l’écran.</td>
+          <td>Fait (déplacement aléatoire)</td>
+          <td>Déplacement “intelligent” + poursuite</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <img src="dia.png" alt="dia">
+  </section>
+</main>
+
+<footer class="site-footer">
+
+  <table class="footer-top">
+    <tr>
+      <td>
+        <a class="footer-top-link" href="#top">Retour en haut</a>
+      </td>
+    </tr>
+  </table>
+
+  <table class="footer-alc">
+    <tr>
+      <td class="footer-col">
+        <strong>Autre redirections</strong>
+        <ul class="footer-links">
+          <li><a href="index.html">->Accueil</a></li>
+          <li><a href="intrus.html">->Intrus</a></li>
+          <li><a href="gardiens.html">->Gardiens</a></li>
+          <li><a href="interface.html">->Interface</a></li>
+          <li><a href="deplacements.html">->Deplacements</a></li>
+          <li><a href="map.html">->Map</a></li>
+          <li><a href="aide.html">->Aide</a></li>
+        </ul>
+      </td>
+
+      <td class="footer-col">
+        <p class="footer-text">
+          <strong>Auteurs :</strong> Rayan Moulai & Anis Zine Abidine & Rayan Lanouni <br>
+          <em>Licence Informatique L2 CYU<br>Année 2025–2026<br>Analyser les métadonnées d’un fichier MP3</em>
+        </p>
+      </td>
+
+      <td class="footer-col">
+        <figure>
+          <img id="logobas" src="images/2eme.png" alt="logblanc"><br>
+          <figcaption>
+            CY Cergy Paris Université<br>
+            33 Boulevard du Port<br>
+            95011 Cergy-Pontoise<br>
+            01 34 25 60 00
+          </figcaption>
+        </figure>
+      </td>
+    </tr>
+  </table>
+
+</footer>
+
+<a href="aide.html" class="aide" target="_blank">Besoin d'aide ?</a>
+
+</body>
+</html>
